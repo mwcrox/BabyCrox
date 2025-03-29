@@ -1,5 +1,5 @@
 // Set this variable to true for "BOY", false for "GIRL"
-const genderIsBoy = false; // Change this to false for a girl reveal
+const genderIsBoy = false; // Change this to true for a boy reveal
 
 document.getElementById("revealButton").addEventListener("click", function () {
     const result = document.getElementById("result");
@@ -15,23 +15,39 @@ document.getElementById("revealButton").addEventListener("click", function () {
         countdown--;
         if (countdown < 0) {
             clearInterval(countdownInterval);
-            revealGender();
+            startFlashingSequence();
         }
     }, 1000);
 });
 
+function startFlashingSequence() {
+    const overlay = document.getElementById("colorOverlay");
+    const colors = ["rgba(51, 153, 255, 0.6)", "rgba(255, 102, 153, 0.6)"]; // Blue & Pink with transparency
+    let flashCount = 0;
+    const maxFlashes = 6;
+
+    const flashInterval = setInterval(() => {
+        overlay.style.backgroundColor = colors[flashCount % 2]; // Alternate colors
+        flashCount++;
+
+        if (flashCount >= maxFlashes) {
+            clearInterval(flashInterval);
+            revealGender();
+        }
+    }, 500);
+}
+
 function revealGender() {
     const result = document.getElementById("result");
     const button = document.getElementById("revealButton");
+    const overlay = document.getElementById("colorOverlay");
 
-    // Flashing effect before reveal
-    document.body.classList.add("flash");
-    setTimeout(() => document.body.classList.remove("flash"), 2000);
+    // Set final overlay color based on gender
+    overlay.style.backgroundColor = genderIsBoy ? "rgba(51, 153, 255, 0.8)" : "rgba(255, 102, 153, 0.8)";
 
-    // Reveal the gender
     setTimeout(() => {
         result.innerText = genderIsBoy ? "IT'S A BOY! 💙" : "IT'S A GIRL! 💖";
-        result.style.color = genderIsBoy ? "#3399ff" : "#ff6699";
+        result.style.color = "black";
         result.style.display = "block";
 
         // Massive confetti explosion
@@ -41,7 +57,7 @@ function revealGender() {
         setTimeout(() => {
             button.style.display = "none";
         }, 1000);
-    }, 2000);
+    }, 1000);
 }
 
 function createConfetti(amount) {

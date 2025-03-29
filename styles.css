@@ -1,97 +1,80 @@
+/* Set background image */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: url('Couple.jpg') no-repeat center center fixed;
-    background-size: cover;
     margin: 0;
     padding: 0;
-    color: white;
-    transition: background 0.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('Couple.jpg');
+    /* Ensure this image is in the same directory */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
 }
 
-.container {
-    margin-top: 100px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    border-radius: 10px;
-    display: inline-block;
+/* Semi-transparent overlay for flashing effect */
+#colorOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    /* Start transparent */
+    transition: background-color 0.5s ease-in-out;
+    /* Smooth transition effect */
+    pointer-events: none;
+    /* Prevents blocking clicks */
+    z-index: 1;
+    /* Ensures it sits above the background but below content */
 }
 
-h1 {
-    color: #ffccff;
-}
-
-button {
+/* Button styling */
+#revealButton {
+    position: relative;
+    z-index: 2;
+    font-size: 24px;
     padding: 15px 30px;
-    font-size: 18px;
-    background-color: #ff6699;
-    color: white;
+    background-color: #fff;
+    color: #333;
     border: none;
     cursor: pointer;
     border-radius: 10px;
-    transition: all 0.3s ease-in-out;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #ff3385;
+#revealButton:hover {
+    background-color: #ddd;
 }
 
+/* Gender reveal text */
 #result {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 20px;
     display: none;
-    animation: pop 1s ease-in-out;
+    font-size: 50px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
 }
 
-/* Flashing effect before reveal */
-@keyframes flash-bg {
-
-    0%,
-    100% {
-        background: url('Couple.jpg') no-repeat center center fixed;
-    }
-
-    50% {
-        background: white;
-    }
-}
-
-.flash {
-    animation: flash-bg 0.2s ease-in-out 10;
-}
-
-/* Confetti Animation */
+/* Confetti effect */
 .confetti {
     position: fixed;
-    width: 12px;
-    height: 12px;
-    background-color: pink;
-    top: 0;
-    border-radius: 50%;
-    animation: fall linear forwards;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    opacity: 0.8;
+    animation: fall linear infinite;
 }
 
 @keyframes fall {
+    from {
+        transform: translateY(-10vh) rotate(0deg);
+    }
+
     to {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-}
-
-/* Reveal Text Pop Effect */
-@keyframes pop {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-
-    50% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(1);
+        transform: translateY(100vh) rotate(360deg);
     }
 }
