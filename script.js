@@ -1,5 +1,5 @@
 // Set this variable to true for "BOY", false for "GIRL"
-const genderIsBoy = true; // Change this to false for a girl reveal
+const genderIsBoy = false; // Change this to false for a girl reveal
 
 document.getElementById("revealButton").addEventListener("click", function () {
     const result = document.getElementById("result");
